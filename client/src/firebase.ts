@@ -4,14 +4,15 @@ import { initializeApp } from 'firebase/app';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: 'mern-blog-b327f.firebaseapp.com',
-  projectId: 'mern-blog-b327f',
-  storageBucket: 'mern-blog-b327f.appspot.com',
-  messagingSenderId: '699397991367',
-  appId: '1:699397991367:web:88ff565ef72a182d6b87e2',
+  apiKey: process.env.FIREBASE_KEY,
+  authDomain: "portfolio-blog-359a0.firebaseapp.com",
+  projectId: "portfolio-blog-359a0",
+  storageBucket: "portfolio-blog-359a0.appspot.com",
+  messagingSenderId: "345611604822",
+  appId: "1:345611604822:web:9f0627e75afeffaf31fcf7",
+  measurementId: "G-7NBX4J0V71"
 };
 
 // Initialize Firebase
