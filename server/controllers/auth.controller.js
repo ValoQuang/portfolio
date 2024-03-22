@@ -39,7 +39,6 @@ export const signin = async (req, res, next) => {
   if (!email || !password || email === '' || password === '') {
     next(errorHandler(400, 'All fields are required'));
   }
-
   try {
     const validUser = await User.findOne({ email });
     if (!validUser) {
@@ -53,7 +52,6 @@ export const signin = async (req, res, next) => {
       { id: validUser._id, isAdmin: validUser.isAdmin },
       process.env.JWT_SECRET
     );
-
     const { password: pass, ...rest } = validUser._doc;
 
     res
