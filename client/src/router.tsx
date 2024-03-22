@@ -2,8 +2,8 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import App from "./App";
 import Home from "./components/Pages/Home";
-import Signin from "./components/Pages/Signin";
-import Signup from "./components/Pages/Signup";
+import Signin from "./components/Pages/SignUp";
+import Signup from "./components/Pages/SignIn";
 import Dashboard from "./components/Pages/Dashboard";
 
 const LazyApp = () => (
