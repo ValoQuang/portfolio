@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type User = {
+  email: string;
+  username: string;
+  profilePicture: string;
+};
+
 type InitialState = {
-  currentUser: null;
+  currentUser: User | null;
   error: null;
   loading: boolean;
 };
-
 
 const initialState: InitialState = {
   currentUser: null,
@@ -29,9 +34,13 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    signoutSuccess: (state) => {
+      state.currentUser = null;
+    },
   },
 });
 
-export const { signInStart, signInSuccess, signInFailure } = userSlice.actions;
+export const { signInStart, signInSuccess, signInFailure, signoutSuccess } =
+  userSlice.actions;
 
 export default userSlice.reducer;

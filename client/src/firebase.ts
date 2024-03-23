@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_KEY,
+  apiKey: "AIzaSyC9EmouGiQ80OAj2aPwEMFnoZamYhUODW8", //process.env.FIREBASE_KEY,
   authDomain: "portfolio-blog-359a0.firebaseapp.com",
   projectId: "portfolio-blog-359a0",
   storageBucket: "portfolio-blog-359a0.appspot.com",
