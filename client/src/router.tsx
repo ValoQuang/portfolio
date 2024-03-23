@@ -1,20 +1,13 @@
-import { Outlet, createBrowserRouter } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Home from "./components/Pages/Home";
 import Signin from "./components/Pages/SignUp";
 import Signup from "./components/Pages/SignIn";
 import Dashboard from "./components/Pages/Dashboard";
 
-const LazyApp = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <App />
-  </Suspense>
-);
-
 export const router = createBrowserRouter([
   {
-    element: <LazyApp />,
+    element:  <App />,
     children: [
       {
         path: "",

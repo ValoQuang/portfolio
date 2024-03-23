@@ -4,6 +4,10 @@ const initialState = {
     theme: 'light',
 };
 
+export type Theme = {
+    theme: string;
+}
+
 const themeSlice = createSlice({
     name: 'theme',
     initialState,
