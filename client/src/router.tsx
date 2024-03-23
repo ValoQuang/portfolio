@@ -4,10 +4,11 @@ import Home from "./components/Pages/Home";
 import Signin from "./components/Pages/SignUp";
 import Signup from "./components/Pages/SignIn";
 import Dashboard from "./components/Pages/Dashboard";
+import PrivateRoute from "./utils/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
-    element:  <App />,
+    element: <App />,
     children: [
       {
         path: "",
@@ -37,13 +38,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "dash-board",
-        index: true,
         element: (
           <>
-            <Dashboard />
+            <PrivateRoute />
           </>
         ),
+        children: [
+          {
+            path: "dash-board",
+            index: true,
+            element: (
+              <>
+                <Dashboard />
+              </>
+            ),
+          },
+        ],
       },
     ],
   },
