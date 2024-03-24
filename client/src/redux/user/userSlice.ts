@@ -5,6 +5,7 @@ type User = {
   username: string;
   profilePicture: string;
   isAdmin: boolean;
+  _id: string;
 };
 
 type InitialState = {
