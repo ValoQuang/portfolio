@@ -67,6 +67,9 @@ export const signin = async (req, res, next) => {
 
 export const google = async (req, res, next) => {
   const { email, name, googlePhotoUrl } = req.body;
+  if (!email || !name || googlePhotoUrl === '') {
+    next(errorHandler(404, 'All fields are required'));
+  }
   try {
     const user = await User.findOne({ email });
     if (user) {
