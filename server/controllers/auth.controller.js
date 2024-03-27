@@ -85,10 +85,13 @@ export const google = async (req, res, next) => {
         })
         .json(rest);
     } else {
+      //create random number as password
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+      //create random number as username + Math.random().toString(9).slice(-4)
       const newUser = new User({
         username:
           name.toLowerCase().split(' ').join('') +
@@ -97,6 +100,8 @@ export const google = async (req, res, next) => {
         password: hashedPassword,
         profilePicture: googlePhotoUrl,
       });
+
+      //save user and sign jwt, return token
       await newUser.save();
       const token = jwt.sign(
         { id: newUser._id, isAdmin: newUser.isAdmin },
