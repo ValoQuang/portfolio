@@ -20,12 +20,12 @@ const userSlice = createSlice({
     signInStart: (state: { loading: boolean }) => {
       state.loading = true;
     },
-    signInSuccess: (state: InitialState, action: PayloadAction<any>) => {
+    signInSuccess: (state: InitialState, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = null;
     },
-    signInFailure: (state: InitialState, action: PayloadAction<any>) => {
+    signInFailure: (state: InitialState, action: PayloadAction<null>) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -36,12 +36,12 @@ const userSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    updateSuccess: (state: InitialState, action: PayloadAction<any>) => {
+    updateSuccess: (state: InitialState, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = null;
     },
-    updateFailure: (state: InitialState, action: PayloadAction<any>) => {
+    updateFailure: (state: InitialState, action: PayloadAction<null>) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -54,7 +54,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    deleteUserFailure: (state: InitialState, action: PayloadAction<any>) => {
+    deleteUserFailure: (state: InitialState, action: PayloadAction<null>) => {
       state.loading = false;
       state.error = action.payload;
     },
