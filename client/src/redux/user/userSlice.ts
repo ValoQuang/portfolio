@@ -39,7 +39,7 @@ const userSlice = createSlice({
     signoutSuccess: (state) => {
       state.currentUser = null;
     },
-    updateStart: (state: { loading: boolean, error: null }) => {
+    updateStart: (state: { loading: boolean; error: null }) => {
       state.loading = true;
       state.error = null;
     },
@@ -52,9 +52,19 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    deleteUserStart: () => {},
-    deleteUserSuccess: () => {},
-    deleteUserFailure: () => {},
+    deleteUserStart: (state: InitialState) => {
+      state.loading = true;
+      state.error = null;
+    },
+    deleteUserSuccess: (state: InitialState) => {
+      state.currentUser = null;
+      state.loading = false;
+      state.error = null;
+    },
+    deleteUserFailure: (state: InitialState, action: PayloadAction<any>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
