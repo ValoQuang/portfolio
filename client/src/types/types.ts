@@ -40,5 +40,6 @@ export type PostCardType = {
 export type FormData = {
   email: string;
   password: string;
+  username?: string;
 };
 

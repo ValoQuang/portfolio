@@ -12,22 +12,24 @@ import { useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
-import { UserPost } from "./DashPosts";
+import { UserPost } from "../../types/types";
 
 export const initialFormData: UserPost = {
-    _id: '',
-    userId: '',
-    content: '',
-    title: '',
-    image: '',
-    category: '',
-    slug: '',
-    updatedAt: ''
-  };
+  _id: "",
+  userId: "",
+  content: "",
+  title: "",
+  image: "",
+  category: "",
+  slug: "",
+  updatedAt: "",
+};
 
 export default function CreatePost() {
   const [file, setFile] = useState<File | null>(null);
-  const [imageUploadProgress, setImageUploadProgress] = useState<string | null>(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState<string | null>(
+    null
+  );
   const [imageUploadError, setImageUploadError] = useState<string | null>(null);
   const [formData, setFormData] = useState<UserPost>(initialFormData);
   const [publishError, setPublishError] = useState<string | null>(null);
@@ -133,7 +135,7 @@ export default function CreatePost() {
             size="sm"
             outline
             onClick={handleUpdloadImage}
-            disabled={imageUploadProgress === '0'}
+            disabled={imageUploadProgress === "0"}
           >
             {imageUploadProgress ? (
               <div className="w-16 h-16">
