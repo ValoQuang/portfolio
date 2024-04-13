@@ -3,16 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { RootState } from "../../redux/store";
-
-type DashComment = {
-  _id: string;
-  content: string;
-  postId: string;
-  userId: string;
-  likes: number[];
-  numberOfLikes: number;
-  updatedAt: string;
-};
+import { DashComment } from "../../types/types";
 
 export default function DashComments() {
   const { currentUser } = useSelector((state: RootState) => state.user);

@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type User = {
-  email: string;
-  username: string;
-  profilePicture: string;
-  isAdmin: boolean;
-  _id: string;
-};
+import { User } from "../../types/types";
 
 type InitialState = {
   currentUser: User | null;

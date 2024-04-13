@@ -4,17 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { RootState } from "../../redux/store";
-
-export type UserPost =  {
-  _id: string,
-  userId: string,
-  content: string,
-  title: string,
-  image: string,
-  category: string,
-  slug: string,
-  updatedAt: string,
-}
+import { UserPost } from "../../types/types";
 
 export default function DashPosts() {
   const { currentUser } = useSelector((state: RootState) => state.user);
