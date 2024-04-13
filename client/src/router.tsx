@@ -5,6 +5,9 @@ import Signin from "./components/Pages/SignUp";
 import Signup from "./components/Pages/SignIn";
 import Dashboard from "./components/Pages/Dashboard";
 import PrivateRoute from "./utils/PrivateRoute";
+import OnlyAdminPrivateRoute from "./utils/OnlyAdminPrivateRoute";
+import CreatePost from "./components/Pages/CreatePost";
+import UpdatePost from "./components/Pages/UpdatePost";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +53,33 @@ export const router = createBrowserRouter([
             element: (
               <>
                 <Dashboard />
+              </>
+            ),
+          },
+        ],
+      },
+      {
+        element: (
+          <>
+            <OnlyAdminPrivateRoute />
+          </>
+        ),
+        children: [
+          {
+            path: "create-post",
+            index: true,
+            element: (
+              <>
+                <CreatePost />
+              </>
+            ),
+          },
+          {
+            path: "update-post/:postId",
+            index: true,
+            element: (
+              <>
+                <UpdatePost />
               </>
             ),
           },
