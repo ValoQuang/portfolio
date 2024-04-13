@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { RootState } from "../../redux/store";
 
-type UserPost =  {
+export type UserPost =  {
   _id: string,
   userId: string,
   content: string,
