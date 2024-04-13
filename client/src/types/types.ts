@@ -16,13 +16,29 @@ export type DashComment = {
   updatedAt: string;
 };
 
-export type UserPost =  {
-    _id: string,
-    userId: string,
-    content: string,
-    title: string,
-    image: string,
-    category: string,
-    slug: string,
-    updatedAt: string,
-  }
+export type UserPost = {
+  _id: string;
+  userId: string;
+  content: string;
+  title: string;
+  image: string;
+  category: string;
+  slug: string;
+  updatedAt: string;
+};
+
+export type PostCardType = {
+  post: {
+    id: any;
+    slug: any;
+    image: string;
+    title: string;
+    category: string;
+  };
+};
+
+export type FormData = {
+  email: string;
+  password: string;
+};
+

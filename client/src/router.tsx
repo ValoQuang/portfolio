@@ -3,11 +3,13 @@ import App from "./App";
 import Home from "./components/Home/Home";
 import Signin from "./components/Pages/SignUp";
 import Signup from "./components/Pages/SignIn";
-import Dashboard from "./components/Pages/Dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
 import PrivateRoute from "./utils/PrivateRoute";
 import OnlyAdminPrivateRoute from "./utils/OnlyAdminPrivateRoute";
 import CreatePost from "./components/Pages/CreatePost";
 import UpdatePost from "./components/Pages/UpdatePost";
+import About from "./components/Pages/About";
+import Projects from "./components/Pages/Projects";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,24 @@ export const router = createBrowserRouter([
         element: (
           <>
             <Signup />
+          </>
+        ),
+      },
+      {
+        path: "about",
+        index: true,
+        element: (
+          <>
+            <About />
+          </>
+        ),
+      },
+      {
+        path: "projects",
+        index: true,
+        element: (
+          <>
+            <Projects />
           </>
         ),
       },

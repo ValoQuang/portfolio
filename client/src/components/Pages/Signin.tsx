@@ -2,15 +2,11 @@ import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { FormData } from '../../types/types';
 import OAuth from "../../utils/OAuth";
 import { signInStart, signInSuccess, signInFailure } from '../../redux/user/userSlice';
 import { RootState } from '../../redux/store';
 
-type FormData = {
-  email: string;
-  password: string;
-};
 
 export default function SignIn() {
   const [formData, setFormData] = useState<FormData>({
