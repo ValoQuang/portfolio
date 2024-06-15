@@ -1,15 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Home from "./components/Home/Home";
-import Signin from "./components/Pages/SignUp";
-import Signup from "./components/Pages/SignIn";
-import Dashboard from "./components/Dashboard/Dashboard";
+import Signin from "./components/Pages/SignIn";
+import Signup from "./components/Pages/SignUp";
+import Dashboard from "./components/Pages/Dashboard";
 import PrivateRoute from "./utils/PrivateRoute";
 import OnlyAdminPrivateRoute from "./utils/OnlyAdminPrivateRoute";
 import CreatePost from "./components/Pages/CreatePost";
 import UpdatePost from "./components/Pages/UpdatePost";
 import About from "./components/Pages/About";
 import Projects from "./components/Pages/Projects";
+import Search from "./components/Pages/Search";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,15 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "search",
+        index: true,
+        element: (
+          <>
+            <Search />
+          </>
+        ),
+      },
+      {
         element: (
           <>
             <PrivateRoute />
@@ -68,7 +78,7 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            path: "dash-board",
+            path: "dashboard",
             index: true,
             element: (
               <>

@@ -28,6 +28,7 @@ export type UserPost = {
 };
 
 export type PostCardType = {
+  _id: string;
   post: {
     id: any;
     slug: any;

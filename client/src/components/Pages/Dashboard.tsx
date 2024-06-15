@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import DashSidebar from "./DashSidebar";
-import DashProfile from "./DashProfile";
-import DashPosts from "./DashPosts";
-import DashUsers from "./DashUsers";
-import DashComments from "./DashComments";
-import DashboardComp from "./DashboardComp";
+import DashSidebar from "../Dashboard/DashSidebar";
+import DashProfile from "../Dashboard/DashProfile";
+import DashPosts from "../Dashboard/DashPosts";
+import DashUsers from "../Dashboard/DashUsers";
+import DashComments from "../Dashboard/DashComments";
+import DashboardComp from "../Dashboard/DashboardComp";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -16,6 +16,7 @@ export default function Dashboard() {
     if (tabFromUrl) {
       setTab(tabFromUrl);
     }
+    console.log(location);
   }, [location.search]);
 
   return (
