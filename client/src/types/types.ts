@@ -17,7 +17,8 @@ export type DashComment = {
 };
 
 export type UserPost = {
-  _id: string;
+  createdAt?: string;
+  _id?: string;
   userId: string;
   content: string;
   title: string;

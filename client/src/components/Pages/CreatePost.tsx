@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { UserPost } from "../../types/types";
 
 export const initialFormData: UserPost = {
-  _id: "",
   userId: "",
   content: "",
   title: "",
