@@ -11,6 +11,7 @@ import UpdatePost from "./components/Pages/UpdatePost";
 import About from "./components/Pages/About";
 import Projects from "./components/Pages/Projects";
 import Search from "./components/Pages/Search";
+import PostPage from "./components/Pages/PostPage";
 
 export const router = createBrowserRouter([
   {
@@ -67,6 +68,15 @@ export const router = createBrowserRouter([
         element: (
           <>
             <Search />
+          </>
+        ),
+      },
+      {
+        path: "post/:postSlug",
+        index: true,
+        element: (
+          <>
+            <PostPage />
           </>
         ),
       },
