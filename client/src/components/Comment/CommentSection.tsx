@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { RootState } from '../../redux/store';
+import { DashComment } from '../../types/types';
 
 type CommentSection = {
     postId: string;
@@ -14,7 +15,7 @@ export default function CommentSection({ postId }: CommentSection) {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [comment, setComment] = useState<string>('');
   const [commentError, setCommentError] = useState(null);
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<DashComment[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -182,7 +183,7 @@ export default function CommentSection({ postId }: CommentSection) {
               key={comment._id}
               comment={comment}
               onLike={handleLike}
-              onEdit={handleEdit}
+              onEdit={handleEdit as any}
               onDelete={(commentId: string) => {
                 setShowModal(true);
                 setCommentToDelete(commentId);

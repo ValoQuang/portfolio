@@ -3,12 +3,21 @@ import { useEffect, useState } from 'react';
 import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
+import { RootState } from '../../redux/store';
+import { DashComment, User } from '../../types/types';
 
-export default function Comment({ comment, onLike, onEdit, onDelete }) {
-  const [user, setUser] = useState({});
+interface Comment {
+    comment: DashComment;
+    onLike: (prop: string) => void; 
+    onEdit: (id: DashComment, content: string) => void; 
+    onDelete: (prop: string) => void;
+}
+
+export default function Comment({ comment, onLike, onEdit, onDelete }: Comment) {
+  const [user, setUser] = useState<User>();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state: RootState) => state.user);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -17,7 +26,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
         if (res.ok) {
           setUser(data);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.log(error.message);
       }
     };
@@ -44,7 +53,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
         setIsEditing(false);
         onEdit(comment, editedContent);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
     }
   };
@@ -53,8 +62,8 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
       <div className='flex-shrink-0 mr-3'>
         <img
           className='w-10 h-10 rounded-full bg-gray-200'
-          src={user.profilePicture}
-          alt={user.username}
+          src={user?.profilePicture}
+          alt={user?.username}
         />
       </div>
       <div className='flex-1'>
@@ -63,7 +72,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
             {user ? `@${user.username}` : 'anonymous user'}
           </span>
           <span className='text-gray-500 text-xs'>
-            {moment(comment.createdAt).fromNow()}
+            {moment(comment.createdAt as any).fromNow()}
           </span>
         </div>
         {isEditing ? (
@@ -102,7 +111,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
                 onClick={() => onLike(comment._id)}
                 className={`text-gray-400 hover:text-blue-500 ${
                   currentUser &&
-                  comment.likes.includes(currentUser._id) &&
+                  comment.likes.includes(currentUser._id as any) &&
                   '!text-blue-500'
                 }`}
               >

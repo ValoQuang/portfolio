@@ -7,6 +7,7 @@ export type User = {
 };
 
 export type DashComment = {
+  createdAt?: string;
   _id: string;
   content: string;
   postId: string;
