@@ -15,7 +15,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[11px] tracked text-amber font-mono mb-6"
+            className="text-[13px] md:text-sm tracked text-amber font-mono mb-8"
           >
             <span className="inline-block w-1.5 h-1.5 bg-amber rounded-full align-middle mr-2 drift" />
             Transmission · {profile.location}
@@ -35,7 +35,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 max-w-xl text-bone-dim text-base md:text-lg leading-relaxed"
+            className="mt-10 max-w-2xl text-bone-dim text-lg md:text-2xl leading-relaxed"
           >
             {profile.role}, working between Redis pub/sub queues, Sequelize migrations,
             and 3D Canvas worlds. Real-time systems with {profile.yearsExperience}+ years
@@ -47,7 +47,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, delay: 0.6 }}
-          className="md:col-span-2 md:col-start-11 text-[11px] tracked text-bone-dim font-mono space-y-2"
+          className="md:col-span-2 md:col-start-11 text-[13px] md:text-sm tracked text-bone-dim font-mono space-y-2"
         >
           <p>
             <span className="text-bone">N</span> 60.21°
