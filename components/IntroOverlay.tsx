@@ -59,9 +59,9 @@ export function IntroOverlay() {
               <button
                 type="button"
                 onClick={handleEnter}
-                className="group relative inline-flex items-center gap-3 rounded-full border border-thread bg-ink-0/60 px-7 py-3 text-bone backdrop-blur-sm transition hover:border-amber hover:text-amber focus:outline-none focus-visible:border-amber focus-visible:text-amber"
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-thread bg-ink-0/60 px-7 py-3 text-bone backdrop-blur-sm transition void-glow void-scan hover:border-amber hover:text-amber focus:outline-none focus-visible:border-amber focus-visible:text-amber"
               >
-                <span className="font-display italic text-lg md:text-xl tracking-wide">
+                <span className="font-display italic text-lg md:text-xl tracking-wide void-flicker">
                   Press to enter the void
                 </span>
                 <svg
