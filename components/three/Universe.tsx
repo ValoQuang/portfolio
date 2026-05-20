@@ -38,6 +38,7 @@ function CameraRig() {
   const targetLook = useRef(new THREE.Vector3().copy(INTRO_START_LOOK));
   const currentPos = useRef(new THREE.Vector3().copy(INTRO_START_POS));
   const currentLook = useRef(new THREE.Vector3().copy(INTRO_START_LOOK));
+  const wasIntro = useRef(true);
 
   const keyframes = useMemo<Keyframe[]>(
     () => [
@@ -66,6 +67,14 @@ function CameraRig() {
       return;
     }
 
+    const justHandedOff = wasIntro.current;
+    if (justHandedOff) {
+      wasIntro.current = false;
+      currentPos.current.copy(INTRO_END_POS);
+      currentLook.current.copy(INTRO_END_LOOK);
+      if (typeof window !== "undefined") window.scrollTo(0, 0);
+    }
+
     const p = scrollRef.current;
     let a = keyframes[0];
     let b = keyframes[keyframes.length - 1];
@@ -85,7 +94,7 @@ function CameraRig() {
     lerpVec(a.pos, b.pos, local, targetPos.current);
     lerpVec(a.look, b.look, local, targetLook.current);
 
-    const k = Math.min(1, delta * 4.5);
+    const k = justHandedOff ? 1 : Math.min(1, delta * 4.5);
     currentPos.current.lerp(targetPos.current, k);
     currentLook.current.lerp(targetLook.current, k);
 
