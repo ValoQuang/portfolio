@@ -2,6 +2,8 @@ import { Nav } from "@/components/Nav";
 import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { UniverseClient } from "@/components/UniverseClient";
+import { BackgroundAudio } from "@/components/BackgroundAudio";
+import { IntroOverlay, IntroGate } from "@/components/IntroOverlay";
 import { Hero } from "@/components/sections/Hero";
 import { Manifesto } from "@/components/sections/Manifesto";
 import { OrbitIntro } from "@/components/sections/OrbitIntro";
@@ -15,21 +17,26 @@ export default function Page() {
     <>
       <SmoothScroll />
       <UniverseClient />
-      <Nav />
-      <ScrollIndicator />
+      <IntroOverlay />
+      <BackgroundAudio />
 
-      <div className="vignette-overlay" aria-hidden />
+      <IntroGate>
+        <Nav />
+        <ScrollIndicator />
 
-      <main className="relative z-10">
-        <Hero />
-        <Manifesto />
-        <OrbitIntro />
-        {chapters.map((c) => (
-          <Chapter key={c.id} chapter={c} total={chapters.length} />
-        ))}
-        <Skills />
-        <Signal />
-      </main>
+        <div className="vignette-overlay" aria-hidden />
+
+        <main className="relative z-10">
+          <Hero />
+          <Manifesto />
+          <OrbitIntro />
+          {chapters.map((c) => (
+            <Chapter key={c.id} chapter={c} total={chapters.length} />
+          ))}
+          <Skills />
+          <Signal />
+        </main>
+      </IntroGate>
     </>
   );
 }

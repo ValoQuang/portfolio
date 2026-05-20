@@ -6,7 +6,9 @@ import * as THREE from "three";
 import { Starfield } from "./Starfield";
 import { Wormhole } from "./Wormhole";
 import { Planet } from "./Planet";
+import { SolarSystem } from "./SolarSystem";
 import { useScrollProgressRef } from "@/lib/scroll";
+import { useIntroRef } from "@/lib/intro";
 import { chapters } from "@/lib/data";
 
 type Keyframe = { at: number; pos: THREE.Vector3; look: THREE.Vector3 };
@@ -23,13 +25,19 @@ function smoothstep(t: number): number {
   return t * t * (3 - 2 * t);
 }
 
+const INTRO_START_POS = new THREE.Vector3(0, 0, 95);
+const INTRO_START_LOOK = new THREE.Vector3(0, 0, -6);
+const INTRO_END_POS = new THREE.Vector3(0, 0, 9);
+const INTRO_END_LOOK = new THREE.Vector3(0, 0, -2);
+
 function CameraRig() {
   const { camera } = useThree();
   const scrollRef = useScrollProgressRef();
-  const targetPos = useRef(new THREE.Vector3(0, 0, 9));
-  const targetLook = useRef(new THREE.Vector3(0, 0, 0));
-  const currentPos = useRef(new THREE.Vector3(0, 0, 9));
-  const currentLook = useRef(new THREE.Vector3(0, 0, 0));
+  const introRef = useIntroRef();
+  const targetPos = useRef(new THREE.Vector3().copy(INTRO_START_POS));
+  const targetLook = useRef(new THREE.Vector3().copy(INTRO_START_LOOK));
+  const currentPos = useRef(new THREE.Vector3().copy(INTRO_START_POS));
+  const currentLook = useRef(new THREE.Vector3().copy(INTRO_START_LOOK));
 
   const keyframes = useMemo<Keyframe[]>(
     () => [
@@ -45,6 +53,19 @@ function CameraRig() {
   );
 
   useFrame((_, delta) => {
+    const intro = introRef.current;
+
+    if (intro.phase !== "done") {
+      const t = intro.phase === "loading" ? 0 : intro.progress;
+      lerpVec(INTRO_START_POS, INTRO_END_POS, t, targetPos.current);
+      lerpVec(INTRO_START_LOOK, INTRO_END_LOOK, t, targetLook.current);
+      currentPos.current.copy(targetPos.current);
+      currentLook.current.copy(targetLook.current);
+      camera.position.copy(currentPos.current);
+      camera.lookAt(currentLook.current);
+      return;
+    }
+
     const p = scrollRef.current;
     let a = keyframes[0];
     let b = keyframes[keyframes.length - 1];
@@ -89,6 +110,8 @@ function Scene() {
       <Starfield count={1400} radius={70} size={0.045} />
       <Starfield count={500} radius={140} size={0.09} color="#B7B0A1" speed={0.004} />
 
+      <SolarSystem position={[0, 0, -6]} scale={0.85} tilt={-0.22} speedFactor={6} />
+
       <group position={[0, 0, -22]}>
         <Wormhole />
       </group>
@@ -115,11 +138,11 @@ function Scene() {
 
 export function Universe() {
   return (
-    <div className="fixed inset-0 -z-0 pointer-events-none" aria-hidden>
+    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
       <Canvas
         dpr={[1, 1.6]}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
-        camera={{ fov: 55, near: 0.1, far: 220, position: [0, 0, 9] }}
+        camera={{ fov: 55, near: 0.1, far: 220, position: [0, 0, 95] }}
       >
         <Suspense fallback={null}>
           <Scene />
