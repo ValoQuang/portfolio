@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-[100dvh] flex items-end pb-24 md:pb-32 px-6"
+      className="relative min-h-dvh flex items-end pb-24 md:pb-32 px-6"
     >
       <div className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-8 items-end">
         <div className="md:col-span-8 md:col-start-2">

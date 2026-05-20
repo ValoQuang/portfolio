@@ -56,7 +56,7 @@ function CameraRig() {
     const intro = introRef.current;
 
     if (intro.phase !== "done") {
-      const t = intro.phase === "loading" ? 0 : intro.progress;
+      const t = intro.phase === "zoom" ? intro.progress : 0;
       lerpVec(INTRO_START_POS, INTRO_END_POS, t, targetPos.current);
       lerpVec(INTRO_START_LOOK, INTRO_END_LOOK, t, targetLook.current);
       currentPos.current.copy(targetPos.current);

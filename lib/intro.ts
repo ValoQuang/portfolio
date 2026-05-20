@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export type IntroPhase = "loading" | "zoom" | "done";
+export type IntroPhase = "idle" | "loading" | "zoom" | "done";
 
 type State = { phase: IntroPhase; progress: number };
 
 const listeners = new Set<(s: State) => void>();
-const state: State = { phase: "loading", progress: 0 };
+const state: State = { phase: "idle", progress: 0 };
 let started = false;
 let raf = 0;
 
@@ -25,6 +25,9 @@ function easeOutCubic(t: number): number {
 export function startIntro() {
   if (started || typeof window === "undefined") return;
   started = true;
+
+  state.phase = "loading";
+  notify();
 
   const loadStart = performance.now();
 

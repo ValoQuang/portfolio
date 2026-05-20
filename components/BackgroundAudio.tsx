@@ -16,45 +16,31 @@ export function BackgroundAudio() {
     audioRef.current = audio;
 
     let started = false;
-    let waitingForGesture = false;
 
-    const playUnmuted = async () => {
-      if (started) return true;
-      try {
-        audio.muted = false;
-        await audio.play();
+    const playUnmuted = () => {
+      if (started) return;
+      audio.muted = false;
+      const p = audio.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => {
+          started = true;
+          setPlaying(true);
+        }).catch(() => {});
+      } else {
         started = true;
         setPlaying(true);
-        return true;
-      } catch {
-        return false;
       }
     };
 
-    const armGestureFallback = () => {
-      if (waitingForGesture || started) return;
-      waitingForGesture = true;
-      const onGesture = async () => {
-        const ok = await playUnmuted();
-        if (ok) {
-          window.removeEventListener("pointerdown", onGesture);
-          window.removeEventListener("keydown", onGesture);
-          window.removeEventListener("touchstart", onGesture);
-        }
-      };
-      window.addEventListener("pointerdown", onGesture);
-      window.addEventListener("keydown", onGesture);
-      window.addEventListener("touchstart", onGesture);
-    };
+    const onIntroStart = () => playUnmuted();
+    window.addEventListener("intro-start", onIntroStart);
 
-    const unsub = subscribeIntro(async (s) => {
-      if (s.phase === "done" && !started) {
-        const ok = await playUnmuted();
-        if (!ok) armGestureFallback();
-      }
+    const unsub = subscribeIntro((s) => {
+      if (s.phase === "done" && !started) playUnmuted();
     });
 
     return () => {
+      window.removeEventListener("intro-start", onIntroStart);
       unsub();
       audio.pause();
       audio.src = "";
