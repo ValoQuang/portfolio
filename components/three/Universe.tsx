@@ -118,11 +118,18 @@ function Scene() {
 
       <Starfield count={1400} radius={70} size={0.045} />
       <Starfield count={500} radius={140} size={0.09} color="#B7B0A1" speed={0.004} />
+      <group position={[0, 0, -90]}>
+        <Starfield count={3200} radius={70} size={0.045} speed={0.01} fog={false} />
+        <Starfield count={600} radius={140} size={0.09} color="#B7B0A1" speed={0.003} fog={false} />
+      </group>
+      <group position={[0, 0, -150]}>
+        <Starfield count={900} radius={60} size={0.045} color="#D8CFBE" speed={0.008} fog={false} />
+      </group>
 
       <SolarSystem position={[0, 0, -6]} scale={0.85} tilt={-0.22} speedFactor={6} />
 
       <group position={[0, 0, -22]}>
-        <Wormhole />
+        <Wormhole count={3000} length={100} />
       </group>
 
       {chapters.map((c, i) => (

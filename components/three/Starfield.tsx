@@ -10,6 +10,8 @@ type Props = {
   size?: number;
   color?: string;
   speed?: number;
+  opacity?: number;
+  fog?: boolean;
 };
 
 export function Starfield({
@@ -18,6 +20,8 @@ export function Starfield({
   size = 0.05,
   color = "#ECE6D9",
   speed = 0.012,
+  opacity = 0.85,
+  fog = true,
 }: Props) {
   const ref = useRef<THREE.Points>(null);
 
