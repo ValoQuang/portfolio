@@ -3,7 +3,16 @@
 import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import {
+  EffectComposer,
+  Bloom,
+  Vignette,
+  Noise,
+  ToneMapping,
+} from "@react-three/postprocessing";
+import { BlendFunction, ToneMappingMode } from "postprocessing";
 import { Starfield } from "./Starfield";
+import { GalacticBand } from "./GalacticBand";
 import { Wormhole } from "./Wormhole";
 import { Planet } from "./Planet";
 import { SolarSystem } from "./SolarSystem";
@@ -14,6 +23,37 @@ import { chapters } from "@/lib/data";
 type Keyframe = { at: number; pos: THREE.Vector3; look: THREE.Vector3 };
 
 const PLANET_Z = [-58, -90, -122];
+
+/** World-space anchors for each chapter planet — kept in sync with <Scene>. */
+const PLANET_XY: Array<[number, number]> = [
+  [1.2, 0.2],
+  [-1.2, -0.3],
+  [1.2, 0.2],
+];
+
+/** A plotted course threading the sun, the three chapter stars, and the marker. */
+function Constellations() {
+  const line = useMemo(() => {
+    const pts = [
+      new THREE.Vector3(0, 0, -6),
+      ...PLANET_Z.map(
+        (z, i) => new THREE.Vector3(PLANET_XY[i][0], PLANET_XY[i][1], z),
+      ),
+      new THREE.Vector3(0, 0, PLANET_Z[2] - 18),
+    ];
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = new THREE.LineBasicMaterial({
+      color: "#E8A87C",
+      transparent: true,
+      opacity: 0.16,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    return new THREE.Line(geo, mat);
+  }, []);
+
+  return <primitive object={line} />;
+}
 
 function lerpVec(a: THREE.Vector3, b: THREE.Vector3, t: number, out: THREE.Vector3) {
   out.x = a.x + (b.x - a.x) * t;
@@ -108,22 +148,24 @@ function CameraRig() {
 function Scene() {
   return (
     <>
-      <color attach="background" args={["#06080F"]} />
-      <fog attach="fog" args={["#06080F", 24, 90]} />
+      <color attach="background" args={["#04060C"]} />
+      <fog attach="fog" args={["#04060C", 24, 96]} />
 
       <ambientLight intensity={0.35} />
       <directionalLight position={[6, 4, 5]} intensity={0.9} color="#FBE3CD" />
       <pointLight position={[-8, -2, -40]} intensity={1.4} color="#E8A87C" distance={40} />
       <pointLight position={[0, 0, -90]} intensity={1.1} color="#9CC4FF" distance={50} />
 
-      <Starfield count={1400} radius={70} size={0.045} />
-      <Starfield count={500} radius={140} size={0.09} color="#B7B0A1" speed={0.004} />
+      <GalacticBand />
+
+      <Starfield count={1600} radius={70} size={0.05} />
+      <Starfield count={520} radius={140} size={0.08} speed={0.004} />
       <group position={[0, 0, -90]}>
-        <Starfield count={3200} radius={70} size={0.045} speed={0.01} fog={false} />
-        <Starfield count={600} radius={140} size={0.09} color="#B7B0A1" speed={0.003} fog={false} />
+        <Starfield count={3400} radius={70} size={0.05} speed={0.01} fog={false} />
+        <Starfield count={620} radius={140} size={0.08} speed={0.003} fog={false} />
       </group>
       <group position={[0, 0, -150]}>
-        <Starfield count={900} radius={60} size={0.045} color="#D8CFBE" speed={0.008} fog={false} />
+        <Starfield count={1000} radius={60} size={0.05} speed={0.008} fog={false} />
       </group>
 
       <SolarSystem position={[0, 0, -6]} scale={0.85} tilt={-0.22} speedFactor={6} />
@@ -132,10 +174,12 @@ function Scene() {
         <Wormhole count={3000} length={100} />
       </group>
 
+      <Constellations />
+
       {chapters.map((c, i) => (
         <Planet
           key={c.id}
-          position={[i === 1 ? -1.2 : 1.2, i === 1 ? -0.3 : 0.2, PLANET_Z[i]]}
+          position={[PLANET_XY[i][0], PLANET_XY[i][1], PLANET_Z[i]]}
           size={c.size}
           hue={c.hue}
           ring={!!c.ring}
@@ -144,10 +188,23 @@ function Scene() {
 
       <mesh position={[0, 0, PLANET_Z[2] - 18]}>
         <icosahedronGeometry args={[1.6, 1]} />
-        <meshBasicMaterial color="#E8A87C" wireframe transparent opacity={0.18} />
+        <meshBasicMaterial color="#E8A87C" wireframe transparent opacity={0.16} />
       </mesh>
 
       <CameraRig />
+
+      <EffectComposer multisampling={4}>
+        <Bloom
+          intensity={1.15}
+          luminanceThreshold={0.12}
+          luminanceSmoothing={0.9}
+          mipmapBlur
+          radius={0.72}
+        />
+        <Vignette offset={0.32} darkness={0.55} eskil={false} />
+        <Noise blendFunction={BlendFunction.OVERLAY} opacity={0.035} />
+        <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+      </EffectComposer>
     </>
   );
 }
@@ -156,6 +213,7 @@ export function Universe() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
       <Canvas
+        flat
         dpr={[1, 1.6]}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         camera={{ fov: 55, near: 0.1, far: 220, position: [0, 0, 95] }}

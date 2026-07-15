@@ -26,6 +26,14 @@ export function Chapter({ chapter, total }: Props) {
   const idx = String(chapter.index + 1).padStart(2, "0");
   const totalStr = String(total).padStart(2, "0");
 
+  // Star-chart flavour — each chapter catalogued as an observed object.
+  const catalog = [
+    { ra: "14ʰ02ᵐ", dec: "−12° 41′", spec: "G2 V" },
+    { ra: "07ʰ38ᵐ", dec: "+31° 09′", spec: "K3 III" },
+    { ra: "21ʰ55ᵐ", dec: "−48° 22′", spec: "M1 V" },
+  ][chapter.index] ?? { ra: "00ʰ00ᵐ", dec: "+00° 00′", spec: "—" };
+  const magnitude = (6.5 - chapter.size * 3).toFixed(1);
+
   return (
     <section
       ref={ref}
@@ -56,6 +64,20 @@ export function Chapter({ chapter, total }: Props) {
           <p className="mt-3 text-bone-dim text-base">
             {chapter.role} — {chapter.city}
           </p>
+
+          <div
+            className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] font-mono tracked text-starlight/45 ${
+              alignRight ? "md:justify-end" : ""
+            }`}
+          >
+            <span className="tabnums">R.A. {catalog.ra}</span>
+            <span className="text-starlight/25">·</span>
+            <span className="tabnums">DEC {catalog.dec}</span>
+            <span className="text-starlight/25">·</span>
+            <span className="tabnums">mag {magnitude}</span>
+            <span className="text-starlight/25">·</span>
+            <span className="text-amber/70">{catalog.spec}</span>
+          </div>
 
           <p
             className={`mt-8 text-bone text-lg leading-relaxed max-w-xl ${alignRight ? "ml-auto" : ""}`}

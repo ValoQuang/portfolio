@@ -3,6 +3,7 @@ import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { UniverseClient } from "@/components/UniverseClient";
 import { BackgroundAudio } from "@/components/BackgroundAudio";
+import { ObservatoryHUD } from "@/components/ObservatoryHUD";
 import { IntroOverlay, IntroGate } from "@/components/IntroOverlay";
 import { Hero } from "@/components/sections/Hero";
 import { Manifesto } from "@/components/sections/Manifesto";
@@ -23,7 +24,9 @@ export default function Page() {
       <IntroGate>
         <Nav />
         <ScrollIndicator />
+        <ObservatoryHUD />
 
+        <div className="plate-grid" aria-hidden />
         <div className="vignette-overlay" aria-hidden />
 
         <main className="relative z-10">
