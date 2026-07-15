@@ -5,22 +5,32 @@ import { profile, references } from "@/lib/data";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+const channels = [
+  { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+  {
+    label: "Phone",
+    value: profile.phone,
+    href: `tel:${profile.phone.replace(/\s/g, "")}`,
+  },
+  { label: "LinkedIn", value: "quang-truong", href: profile.linkedin },
+  { label: "GitHub", value: "ValoQuang", href: profile.github },
+];
+
 export function Signal() {
   return (
     <section
       id="signal"
-      className="relative min-h-[100dvh] flex items-center px-6 py-32"
+      className="relative min-h-[100dvh] flex items-center px-6 py-32 md:py-40"
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1, ease }}
-        className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-8"
+        className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-x-8 gap-y-14"
       >
         <div className="md:col-span-3 md:col-start-2">
-          <p className="text-[11px] tracked text-amber font-mono">03 / Signal</p>
-          <div className="hairline mt-4 w-16" />
+          <span className="eyebrow font-mono">04 · Signal</span>
         </div>
 
         <div className="md:col-span-7">
@@ -31,53 +41,85 @@ export function Signal() {
             </span>
           </h2>
 
-          <div className="mt-12 grid sm:grid-cols-2 gap-x-8 gap-y-6 max-w-xl">
-            <a href={`mailto:${profile.email}`} className="group block">
-              <p className="text-[11px] tracked text-bone-dim font-mono mb-1">Email</p>
-              <p className="text-bone group-hover:text-amber transition-colors text-base">
-                {profile.email}
-              </p>
-            </a>
-            <a href={`tel:${profile.phone.replace(/\s/g, "")}`} className="group block">
-              <p className="text-[11px] tracked text-bone-dim font-mono mb-1">Phone</p>
-              <p className="text-bone group-hover:text-amber transition-colors text-base">
-                {profile.phone}
-              </p>
-            </a>
+          <div className="mt-10">
             <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="group block"
+              href={`mailto:${profile.email}`}
+              className="island group"
+              aria-label={`Email ${profile.email}`}
             >
-              <p className="text-[11px] tracked text-bone-dim font-mono mb-1">LinkedIn</p>
-              <p className="text-bone group-hover:text-amber transition-colors text-base">
-                quang-truong
-              </p>
+              <span className="font-mono text-[13px] tracked">Open a channel</span>
+              <span className="island-icon">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+                  <path
+                    d="M2.5 9.5 9.5 2.5M9.5 2.5H4M9.5 2.5V8"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
             </a>
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noreferrer"
-              className="group block"
-            >
-              <p className="text-[11px] tracked text-bone-dim font-mono mb-1">GitHub</p>
-              <p className="text-bone group-hover:text-amber transition-colors text-base">
-                ValoQuang
-              </p>
-            </a>
+          </div>
+
+          <div className="mt-12 grid sm:grid-cols-2 gap-3 max-w-xl">
+            {channels.map((c) => (
+              <a
+                key={c.label}
+                href={c.href}
+                target={c.href.startsWith("http") ? "_blank" : undefined}
+                rel={c.href.startsWith("http") ? "noreferrer" : undefined}
+                className="bezel group block"
+              >
+                <div className="bezel-core px-5 py-4 flex items-center justify-between gap-3">
+                  <div className="bezel-bloom" />
+                  <div className="min-w-0">
+                    <p className="text-[10px] tracked text-bone-dim font-mono mb-1">
+                      {c.label}
+                    </p>
+                    <p className="text-bone group-hover:text-amber transition-colors duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] text-sm truncate">
+                      {c.value}
+                    </p>
+                  </div>
+                  <span className="shrink-0 text-bone-dim/60 group-hover:text-amber transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+                      <path
+                        d="M2.5 9.5 9.5 2.5M9.5 2.5H4M9.5 2.5V8"
+                        stroke="currentColor"
+                        strokeWidth="1.1"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))}
           </div>
 
           <div className="mt-20">
             <p className="text-[11px] tracked text-bone-dim font-mono mb-6">
               Vouched for by
             </p>
-            <div className="grid sm:grid-cols-2 gap-6 max-w-xl">
+            <div className="grid sm:grid-cols-2 gap-3 max-w-xl">
               {references.map((r) => (
-                <div key={r.email} className="border-l border-thread pl-4">
-                  <p className="text-bone text-sm">{r.name}</p>
-                  <p className="text-bone-dim text-xs mt-1 leading-relaxed">{r.role}</p>
-                </div>
+                <a
+                  key={r.email}
+                  href={r.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bezel group block"
+                >
+                  <div className="bezel-core p-5">
+                    <div className="bezel-bloom" />
+                    <p className="text-bone text-sm group-hover:text-amber transition-colors duration-500">
+                      {r.name}
+                    </p>
+                    <p className="text-bone-dim text-xs mt-1.5 leading-relaxed">
+                      {r.role}
+                    </p>
+                  </div>
+                </a>
               ))}
             </div>
           </div>

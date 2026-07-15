@@ -24,8 +24,8 @@ export function Manifesto() {
         className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-8"
       >
         <div className="md:col-span-3 md:col-start-2">
-          <p className="text-[11px] tracked text-amber font-mono">01 / Origin</p>
-          <div className="hairline mt-4 w-16" />
+          <span className="eyebrow font-mono">01 · Origin</span>
+          <div className="hairline mt-6 w-16" />
         </div>
         <div className="md:col-span-6">
           <p className="font-display text-bone text-[clamp(1.6rem,3.4vw,2.6rem)] leading-[1.15] tracking-tight">

@@ -40,13 +40,14 @@ export const chapters: Chapter[] = [
     hue: [0.07, 0.62, 0.55],
     ring: true,
     summary:
-      "Owning the funding module of an iGaming wallet engine that sustains 10k+ concurrent transactions/sec through Redis-backed queues, cron jobs, and websocket state sync.",
+      "Full-stack ownership of the funding module of an iGaming wallet — scaling payments across 13+ markets on Redis-backed queues, async workers, and websocket state sync, while wiring AI into the team's daily workflow.",
     beats: [
-      "Scaled the platform from a single market to 13+, designing a high-level funding profile system that adapts per-market payment rules.",
-      "Hardened deposit/withdraw flows against third-party banks using RSA, MD5, and SHA-256 according to each provider's spec.",
-      "Integrated game ecosystems with Evolution (SE) and Fachai (CN), and stood up a proxy layer protecting the origin.",
-      "Shipped Redis pub/sub debugging workflows with Redis Insight and live order-status sync over websockets.",
-      "Mentor other astronaut and strive forward together."
+      "Scaled payments from a single market to 13+ with a configurable funding-profile system — new markets, methods, and business rules ship without a deploy.",
+      "Architected an event-driven payment pipeline on Redis Pub/Sub, WebSockets, async workers, and cron — reliable real-time deposit/withdraw updates under high traffic.",
+      "Integrated 20+ payment providers and banking gateways, implementing provider-specific RSA, MD5, and SHA-256 signing for secure transactions.",
+      "Built an internal Slack bot wired to Claude and trained on team SOPs, plus reusable Agent skills and instruction docs that automate repetitive engineering work.",
+      "Stood up a proxy gateway to isolate internal services, and connected game ecosystems — Evolution (SE) and Fa Chai (CN) — through multi-layer APIs.",
+      "Shipped the CRM back-office (React, Material UI, Redux Toolkit) and player loyalty portal, then mentored newcomers and took ownership of the module.",
     ],
   },
   {
@@ -60,11 +61,11 @@ export const chapters: Chapter[] = [
     size: 0.85,
     hue: [0.55, 0.18, 0.46],
     summary:
-      "Migrated a JavaScript codebase to TypeScript and built 3D product configurators with Three.js and the HTML5 Canvas API.",
+      "Migrated a JavaScript codebase to TypeScript and built an interactive 3D product configurator with Three.js and the HTML5 Canvas API.",
     beats: [
-      "Authored an internal Three.js SDK supporting client-specific customization needs.",
-      "Tuned API performance via Apollo GraphQL queries and mutations.",
-      "Migrated state from Zustand to Redux as the surface area outgrew it.",
+      "Authored an internal Three.js SDK powering client-specific product customization and a richer shopping experience.",
+      "Tuned API performance via Apollo GraphQL queries and mutations, and maintained reusable UI across the platform.",
+      "Migrated state from Zustand to Redux as the surface area outgrew it; picked up Shopify app foundations along the way.",
       "Career break Jul–Dec 2023 — Anti-Air Infantry, Finnish Defence Forces.",
     ],
   },
@@ -118,14 +119,14 @@ export const skillGroups = [
   {
     title: "Platform & Tooling",
     items: [
-      "AWS S3 & CloudWatch",
+      "AWS S3",
       "GitHub Actions CI/CD",
       "Docker",
       "Jest",
-      "Sentry",
+      "Claude / Claude Co-work",
+      "Codex / Cursor",
       "Postman",
       "Ngrok",
-      "Codex / Cursor",
     ],
   },
 ];

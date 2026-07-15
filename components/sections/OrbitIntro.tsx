@@ -19,9 +19,7 @@ export function OrbitIntro() {
       className="relative min-h-[80dvh] flex items-center px-6"
     >
       <motion.div style={{ opacity }} className="max-w-7xl mx-auto w-full text-center">
-        <p className="text-[11px] tracked text-amber font-mono">
-          <span className="glyph-divider">02 / Orbit</span>
-        </p>
+        <span className="eyebrow font-mono">02 · Orbit</span>
         <motion.h2
           style={{ letterSpacing: useTransform(letter, (v) => `${v}em`) }}
           className="mt-10 font-display text-bone text-[clamp(2rem,7vw,6rem)] leading-[1] font-light"

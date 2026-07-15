@@ -57,27 +57,34 @@ export function Chapter({ chapter, total }: Props) {
             {chapter.role} — {chapter.city}
           </p>
 
-          <p className="mt-8 text-bone text-lg leading-relaxed max-w-xl ml-auto">
-            <span className={alignRight ? "" : "block"}>{chapter.summary}</span>
+          <p
+            className={`mt-8 text-bone text-lg leading-relaxed max-w-xl ${alignRight ? "ml-auto" : ""}`}
+          >
+            {chapter.summary}
           </p>
 
-          <ul
-            className={`mt-10 space-y-4 max-w-xl text-bone-dim text-sm leading-relaxed ${
-              alignRight ? "ml-auto" : ""
-            }`}
-          >
-            {chapter.beats.map((beat) => (
-              <li key={beat} className="flex gap-3 items-start">
-                {!alignRight && (
-                  <span className="mt-2 inline-block w-3 h-px bg-amber shrink-0" />
-                )}
-                <span className="flex-1">{beat}</span>
-                {alignRight && (
-                  <span className="mt-2 inline-block w-3 h-px bg-amber shrink-0" />
-                )}
-              </li>
-            ))}
-          </ul>
+          {/* Dossier — nested machined panel holding the mission log */}
+          <div className={`mt-10 max-w-xl ${alignRight ? "ml-auto" : ""}`}>
+            <div className="bezel group">
+              <div className="bezel-core p-6 md:p-7">
+                <div className="bezel-bloom" />
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber drift" />
+                  <span className="text-[10px] tracked text-bone-dim font-mono">
+                    Mission log
+                  </span>
+                </div>
+                <ul className="space-y-4 text-bone-dim text-sm leading-relaxed text-left">
+                  {chapter.beats.map((beat) => (
+                    <li key={beat} className="flex gap-3 items-start">
+                      <span className="mt-2 inline-block w-3 h-px bg-amber shrink-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:w-4" />
+                      <span className="flex-1">{beat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </motion.div>
     </section>
