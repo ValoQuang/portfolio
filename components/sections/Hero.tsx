@@ -37,9 +37,9 @@ export function Hero() {
             transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="mt-10 max-w-2xl text-bone-dim text-lg md:text-2xl leading-relaxed"
           >
-            {profile.role}, working between Redis pub/sub queues, Sequelize migrations,
-            and 3D Canvas worlds. Real-time systems with {profile.yearsExperience}+ years
-            on the seam where infrastructure meets interface.
+            {profile.role}. {profile.yearsExperience}+ years shipping payment
+            infrastructure, provider integrations, and the AI tooling a backend
+            team works with every day.
           </motion.p>
         </div>
 

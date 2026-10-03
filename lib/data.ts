@@ -6,10 +6,10 @@ export const profile = {
   phone: "+358 40 643 3423",
   linkedin: "https://linkedin.com/in/quang-truong-07b150215",
   github: "https://github.com/ValoQuang",
-  role: "Full Stack Software Engineer",
-  yearsExperience: 4,
+  role: "Backend Engineer, Payments",
+  yearsExperience: 5,
   manifesto:
-    "Vietnamese-Finnish engineer building event-driven systems and real-time interfaces. I move comfortably between Redis pub/sub queues, Sequelize migrations, and 3D Canvas worlds — and I like the seam where they meet.",
+    "Vietnamese-Finnish engineer who owns the payment layer of a multi-market iGaming platform: 34 provider integrations, idempotent callbacks, row-locked state machines, and a Claude-based agent harness the team codes with every day. Frontend and 3D roots, backend by choice.",
 };
 
 export type Chapter = {
@@ -32,7 +32,7 @@ export const chapters: Chapter[] = [
     id: "s5tech",
     index: 0,
     company: "S5Tech LTD",
-    role: "Full Stack Software Engineer",
+    role: "Backend Engineer, Funding Module Owner",
     city: "Singapore — Remote",
     period: "Jun 2024 — Present",
     orbit: 5.6,
@@ -40,14 +40,16 @@ export const chapters: Chapter[] = [
     hue: [0.07, 0.62, 0.55],
     ring: true,
     summary:
-      "Full-stack ownership of the funding module of an iGaming wallet — scaling payments across 13+ markets on Redis-backed queues, async workers, and websocket state sync, while wiring AI into the team's daily workflow.",
+      "Code owner of the funding module of a multi-brand iGaming platform: 270+ merged PRs, 34 payment-provider integrations across 13 markets, and the AI harness the backend team ships with.",
     beats: [
-      "Scaled payments from a single market to 13+ with a configurable funding-profile system — new markets, methods, and business rules ship without a deploy.",
-      "Architected an event-driven payment pipeline on Redis Pub/Sub, WebSockets, async workers, and cron — reliable real-time deposit/withdraw updates under high traffic.",
-      "Integrated 20+ payment providers and banking gateways, implementing provider-specific RSA, MD5, and SHA-256 signing for secure transactions.",
-      "Built an internal Slack bot wired to Claude and trained on team SOPs, plus reusable Agent skills and instruction docs that automate repetitive engineering work.",
-      "Stood up a proxy gateway to isolate internal services, and connected game ecosystems — Evolution (SE) and Fa Chai (CN) — through multi-layer APIs.",
-      "Shipped the CRM back-office (React, Material UI, Redux Toolkit) and player loyalty portal, then mentored newcomers and took ownership of the module.",
+      "Built 34 payment-provider integrations (bank transfer, QR native, e-wallet, payout) across TH, BR, MX, CO, PE, PH, PK, BD, ID, MY and more, each with its own RSA / AES / MD5 / SHA-256 signing scheme.",
+      "Designed the Funding Profile and Funding Group system: payment methods, limits and bank lists configured per brand and market from DB and TOML, no deploy needed.",
+      "Hardened the transaction pipeline: per-transaction mutex, SELECT … FOR UPDATE stale-write guard, idempotent provider callbacks, auto-reversal on provider error, error-code classification. Closed a double-credit race in production.",
+      "Built withdraw retry-as-new-order and proxy-to-provider flows, with real-time status pushed to player and back office over Redis Pub/Sub and WebSockets.",
+      "Integrated game providers end to end: Pragmatic Play Direct, Nextspin, Evolution (retry mechanism), Fa Chai, Tada.",
+      "Built a Claude-based ops agent for the team: scans the ops channel for stale TechOps threads, drafts the daily report from Slack and git, runs a pre-deploy migration check on the funding module.",
+      "Wrote the AI harness for the backend repo: CLAUDE.md, per-domain convention docs, and five Claude Code skills covering ticket → spec → implement → PR and payment-incident analysis. Spec approved before any code is written.",
+      "Earlier: shipped the CRM back-office (React, Material UI, Redux Toolkit) and the player portal, then moved to backend and took ownership of the module.",
     ],
   },
   {
@@ -65,8 +67,8 @@ export const chapters: Chapter[] = [
     beats: [
       "Authored an internal Three.js SDK powering client-specific product customization and a richer shopping experience.",
       "Tuned API performance via Apollo GraphQL queries and mutations, and maintained reusable UI across the platform.",
-      "Migrated state from Zustand to Redux as the surface area outgrew it; picked up Shopify app foundations along the way.",
-      "Career break Jul–Dec 2023 — Anti-Air Infantry, Finnish Defence Forces.",
+      "Migrated state from Zustand to Redux as the surface area outgrew it; built Shopify app foundations.",
+      "Career break Jul–Dec 2023: Anti-Air Infantry, Finnish Defence Forces.",
     ],
   },
   {
@@ -91,42 +93,40 @@ export const chapters: Chapter[] = [
 
 export const skillGroups = [
   {
-    title: "Frontend",
+    title: "Backend & Payments",
     items: [
-      "TypeScript",
-      "React / Vite",
-      "Redux Toolkit",
-      "Zustand",
-      "TanStack",
-      "Material UI",
-      "Tailwind",
-      "Three.js / R3F",
-    ],
-  },
-  {
-    title: "Backend & Data",
-    items: [
-      "Node.js",
-      "PostgreSQL",
-      "Sequelize ORM",
-      "MongoDB",
-      "Redis Pub/Sub",
-      "Redis Insight",
-      "Node-cron",
+      "TypeScript / Node.js",
+      "Express",
+      "PostgreSQL / Sequelize",
+      "Redis / BullMQ",
       "WebSockets",
+      "Zod",
+      "Payment gateway integration",
+      "RSA / AES / HMAC signing",
     ],
   },
   {
-    title: "Platform & Tooling",
+    title: "AI Engineering",
     items: [
-      "AWS S3",
-      "GitHub Actions CI/CD",
-      "Docker",
-      "Jest",
-      "Claude / Claude Co-work",
+      "Claude Code skills & agents",
+      "MCP servers",
+      "Agent harness / CLAUDE.md",
+      "Scheduled ops agents",
+      "Slack bots",
       "Codex / Cursor",
-      "Postman",
-      "Ngrok",
+    ],
+  },
+  {
+    title: "Frontend & Platform",
+    items: [
+      "React / Next.js",
+      "Redux Toolkit",
+      "Material UI / Tailwind",
+      "Three.js / R3F",
+      "Jest",
+      "Docker",
+      "GitHub Actions CI/CD",
+      "AWS S3",
     ],
   },
 ];
