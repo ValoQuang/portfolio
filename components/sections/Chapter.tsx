@@ -9,6 +9,25 @@ type Props = {
   total: number;
 };
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** "Jun 2024 — Present" → { uptime: "2y 4m", live: true } */
+function uptime(period: string) {
+  const [from, to] = period.split("—").map((s) => s.trim());
+  const parse = (s: string) => {
+    if (/present/i.test(s)) {
+      const now = new Date();
+      return now.getFullYear() * 12 + now.getMonth();
+    }
+    const [m, y] = s.split(" ");
+    return Number(y) * 12 + MONTHS.indexOf(m);
+  };
+  const months = Math.max(0, parse(to) - parse(from));
+  const y = Math.floor(months / 12);
+  const m = months % 12;
+  return { uptime: y ? `${y}y ${m}m` : `${m}m`, live: /present/i.test(to) };
+}
+
 export function Chapter({ chapter, total }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -25,82 +44,73 @@ export function Chapter({ chapter, total }: Props) {
   const alignRight = chapter.index % 2 === 1;
   const idx = String(chapter.index + 1).padStart(2, "0");
   const totalStr = String(total).padStart(2, "0");
-
-  // Star-chart flavour — each chapter catalogued as an observed object.
-  const catalog = [
-    { ra: "14ʰ02ᵐ", dec: "−12° 41′", spec: "G2 V" },
-    { ra: "07ʰ38ᵐ", dec: "+31° 09′", spec: "K3 III" },
-    { ra: "21ʰ55ᵐ", dec: "−48° 22′", spec: "M1 V" },
-  ][chapter.index] ?? { ra: "00ʰ00ᵐ", dec: "+00° 00′", spec: "—" };
-  const magnitude = (6.5 - chapter.size * 3).toFixed(1);
+  const pid = (0x3a70 + chapter.index * 0x1c3).toString(16).toUpperCase();
+  const { uptime: up, live } = uptime(chapter.period);
 
   return (
-    <section
-      ref={ref}
-      className="relative min-h-[120dvh] flex items-center px-6 py-24"
-    >
-      <motion.div
+    <section ref={ref} className="relative min-h-[120dvh] flex items-center px-6 md:px-20 py-24">
+      <motion.article
         style={{ opacity, x }}
         className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-6"
       >
-        <div
-          className={`md:col-span-6 ${alignRight ? "md:col-start-7 md:text-right" : "md:col-start-2"}`}
-        >
-          <div
-            className={`flex items-center gap-3 mb-6 ${alignRight ? "md:justify-end" : ""}`}
-          >
-            <span className="text-[11px] tracked text-amber font-mono">
-              {idx} <span className="text-bone-dim">/ {totalStr}</span>
+        <div className={`md:col-span-6 ${alignRight ? "md:col-start-7 md:text-right" : "md:col-start-2"}`}>
+          <div className={`flex items-center gap-3 mb-6 ${alignRight ? "md:justify-end" : ""}`}>
+            <span className="text-xs tracked text-neon font-mono tabnums">
+              {idx} <span className="text-chrome-dim">/ {totalStr}</span>
             </span>
-            <span className="hairline flex-1 max-w-[120px]" />
-            <span className="text-[11px] tracked text-bone-dim font-mono">
-              {chapter.period}
-            </span>
+            <span className="hairline flex-1 max-w-30" />
+            <span className="text-xs tracked text-chrome-dim font-mono">{chapter.period}</span>
           </div>
 
-          <h3 className="font-display text-bone text-[clamp(2rem,5vw,4rem)] leading-[0.95] tracking-tight">
+          <h3 className="font-display font-bold uppercase text-chrome text-[clamp(2.2rem,5.4vw,4.4rem)] leading-[0.92] tracking-[-0.02em]">
             {chapter.company}
           </h3>
-          <p className="mt-3 text-bone-dim text-base">
+          <p className="mt-3 text-chrome-dim text-lg">
             {chapter.role} — {chapter.city}
           </p>
 
           <div
-            className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] font-mono tracked text-starlight/45 ${
+            className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] font-mono tracked text-cyan/55 tabnums ${
               alignRight ? "md:justify-end" : ""
             }`}
           >
-            <span className="tabnums">R.A. {catalog.ra}</span>
-            <span className="text-starlight/25">·</span>
-            <span className="tabnums">DEC {catalog.dec}</span>
-            <span className="text-starlight/25">·</span>
-            <span className="tabnums">mag {magnitude}</span>
-            <span className="text-starlight/25">·</span>
-            <span className="text-amber/70">{catalog.spec}</span>
+            <span>PID 0x{pid}</span>
+            <span className="text-cyan/25">/</span>
+            <span>Uptime {up}</span>
+            <span className="text-cyan/25">/</span>
+            <span className={live ? "text-neon" : "text-chrome-dim"}>
+              {live ? (
+                <>
+                  <span className="inline-block w-1.5 h-1.5 bg-neon blink mr-1.5 align-middle" />
+                  Running
+                </>
+              ) : (
+                "Exited 0"
+              )}
+            </span>
           </div>
 
-          <p
-            className={`mt-8 text-bone text-lg leading-relaxed max-w-xl ${alignRight ? "ml-auto" : ""}`}
-          >
+          <p className={`mt-8 text-chrome text-xl leading-relaxed max-w-[52ch] ${alignRight ? "ml-auto" : ""}`}>
             {chapter.summary}
           </p>
 
-          {/* Dossier — nested machined panel holding the mission log */}
-          <div className={`mt-10 max-w-xl ${alignRight ? "ml-auto" : ""}`}>
-            <div className="bezel group">
-              <div className="bezel-core p-6 md:p-7">
-                <div className="bezel-bloom" />
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber drift" />
-                  <span className="text-[10px] tracked text-bone-dim font-mono">
-                    Mission log
+          <div className={`mt-10 max-w-2xl ${alignRight ? "ml-auto" : ""}`}>
+            <div className="panel">
+              <div className="panel-core p-6 md:p-7">
+                <div className="panel-glow" />
+                <div className="flex items-center justify-between gap-3 mb-5 text-[11px] tracked font-mono">
+                  <span className="text-chrome-dim">
+                    <span className="text-neon">$</span> tail -n {chapter.beats.length} process.log
                   </span>
+                  <span className="text-cyan/50">{chapter.beats.length} lines</span>
                 </div>
-                <ul className="space-y-4 text-bone-dim text-sm leading-relaxed text-left">
-                  {chapter.beats.map((beat) => (
-                    <li key={beat} className="flex gap-3 items-start">
-                      <span className="mt-2 inline-block w-3 h-px bg-amber shrink-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:w-4" />
-                      <span className="flex-1">{beat}</span>
+                <ul className="space-y-5 text-chrome/85 text-base md:text-[17px] leading-[1.65] text-left">
+                  {chapter.beats.map((beat, i) => (
+                    <li key={beat} className="grid grid-cols-[auto_1fr] gap-3">
+                      <span className="font-mono text-xs text-neon/80 tabnums pt-1">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span>{beat}</span>
                     </li>
                   ))}
                 </ul>
@@ -108,7 +118,7 @@ export function Chapter({ chapter, total }: Props) {
             </div>
           </div>
         </div>
-      </motion.div>
+      </motion.article>
     </section>
   );
 }

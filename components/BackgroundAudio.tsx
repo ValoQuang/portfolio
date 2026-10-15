@@ -8,7 +8,7 @@ export function BackgroundAudio() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    const audio = new Audio("/background.mp3");
+    const audio = new Audio("/background.m4a");
     audio.loop = true;
     audio.volume = 0.35;
     audio.preload = "auto";
@@ -68,7 +68,7 @@ export function BackgroundAudio() {
       onClick={toggle}
       aria-label={showAsOff ? "Play background music" : "Mute background music"}
       aria-pressed={!showAsOff}
-      className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-thread bg-ink-0/70 text-bone-dim backdrop-blur transition hover:text-bone hover:border-amber"
+      className="notched [--notch:8px] fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center bg-ink-2/90 text-chrome-dim transition-colors duration-300 hover:bg-neon hover:text-ink-0 active:translate-y-px"
     >
       <svg
         width="16"

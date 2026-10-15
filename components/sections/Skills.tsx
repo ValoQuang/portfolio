@@ -4,8 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { skillGroups, education } from "@/lib/data";
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
 export function Skills() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -16,85 +14,72 @@ export function Skills() {
   const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
-    <section
-      id="instruments"
-      ref={ref}
-      className="relative min-h-[100dvh] flex items-center px-6 py-28 md:py-40"
-    >
-      <motion.div
-        style={{ opacity, y }}
-        className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-x-10 gap-y-14"
-      >
+    <section id="stack" ref={ref} className="relative min-h-dvh flex items-center px-6 pt-28 pb-36 md:pt-40 md:pb-48">
+      <motion.div style={{ opacity, y }} className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-x-10 gap-y-14">
         <div className="md:col-span-3 md:col-start-2">
-          <span className="eyebrow font-mono">03 · Instruments</span>
-          <p className="mt-7 font-display text-bone text-[clamp(1.7rem,3vw,2.6rem)] leading-[1.05] tracking-tight">
-            The tools I reach for first.
+          <span className="tag">03 · Stack</span>
+          <p className="mt-7 font-display font-semibold uppercase text-chrome text-[clamp(1.7rem,3vw,2.6rem)] leading-none tracking-[-0.01em]">
+            Loaded modules.
           </p>
-          <p className="mt-5 text-bone-dim text-sm leading-relaxed max-w-xs">
-            Three consoles I keep within arm&apos;s reach — the surfaces, the
-            engines, and the ground crew that keeps them flying.
+          <p className="mt-5 text-chrome-dim text-base leading-relaxed max-w-xs">
+            Payments first. The AI tooling and the frontend roots sit on top of it.
           </p>
         </div>
 
-        <div className="md:col-span-7 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {skillGroups.map((group, gi) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.8, delay: gi * 0.1, ease }}
-              className="bezel group h-full"
-            >
-              <div className="bezel-core h-full flex flex-col p-5">
-                <div className="bezel-bloom" />
-                <div className="flex items-center justify-between">
-                  <p className="text-[11px] tracked text-bone-dim font-mono">
-                    {group.title}
-                  </p>
-                  <span className="text-[10px] font-mono text-amber/70">
-                    0{gi + 1}
-                  </span>
+        {/* One panel: primary module on top, the other two split below */}
+        <div className="md:col-span-7 panel">
+          <div className="panel-core grid sm:grid-cols-2">
+            {skillGroups.map((group, gi) => {
+              const primary = gi === 0;
+              return (
+                <div
+                  key={group.title}
+                  className={`p-6 md:p-7 ${
+                    primary ? "sm:col-span-2 border-b border-line" : gi === 1 ? "sm:border-r border-line" : ""
+                  } ${gi === 1 ? "max-sm:border-b" : ""}`}
+                >
+                  <div className="flex items-center justify-between mb-5">
+                    <h3 className={`text-xs tracked font-mono ${primary ? "text-neon" : "text-chrome-dim"}`}>
+                      {group.title}
+                    </h3>
+                    <span className="text-[11px] font-mono text-cyan/60 tabnums">
+                      mod_0{gi + 1} · {group.items.length}
+                    </span>
+                  </div>
+                  <ul className={`grid gap-x-6 gap-y-3 text-chrome text-base ${primary ? "sm:grid-cols-2" : ""}`}>
+                    {group.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2.5 leading-snug">
+                        <span className="inline-block w-1.5 h-px bg-neon/70 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="hairline mt-4 mb-5" />
-                <ul className="flex flex-col gap-2.5 text-bone text-sm">
-                  {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2.5 leading-snug"
-                    >
-                      <span className="inline-block w-1 h-1 rounded-full bg-amber/50 shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-150 group-hover:bg-amber" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
+              );
+            })}
+          </div>
         </div>
 
         <div className="md:col-span-10 md:col-start-2 mt-4">
           <div className="flex items-center gap-4">
-            <p className="text-[11px] tracked text-bone-dim font-mono">Education</p>
+            <p className="text-xs tracked text-chrome-dim font-mono">Education</p>
             <span className="hairline flex-1" />
           </div>
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
-            {education.map((e) => (
-              <div key={e.school} className="bezel group">
-                <div className="bezel-core p-6">
-                  <div className="bezel-bloom" />
-                  <p className="text-[11px] tracked text-bone-dim font-mono mb-3">
-                    {e.period}
-                  </p>
-                  <p className="font-display text-bone text-xl tracking-tight">
-                    {e.school}
-                  </p>
-                  <p className="text-bone-dim text-sm mt-2 leading-relaxed">
+          <div className="panel mt-8">
+            <div className="panel-core grid sm:grid-cols-2">
+              {education.map((e, i) => (
+                <div
+                  key={e.school}
+                  className={`p-6 ${i === 0 ? "border-b sm:border-b-0 sm:border-r border-line" : ""}`}
+                >
+                  <p className="text-xs tracked text-cyan/60 font-mono mb-3 tabnums">{e.period}</p>
+                  <p className="font-display font-semibold text-chrome text-xl tracking-tight">{e.school}</p>
+                  <p className="text-chrome-dim text-base mt-2 leading-relaxed">
                     {e.track} — {e.place}
                   </p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>

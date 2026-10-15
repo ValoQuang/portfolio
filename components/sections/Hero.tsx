@@ -3,60 +3,61 @@
 import { motion } from "framer-motion";
 import { profile } from "@/lib/data";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export function Hero() {
+  const first = profile.name.split(" ").slice(0, 2).join(" ");
+  const last = `${profile.name.split(" ").slice(2).join(" ")}.`;
+
   return (
-    <section
-      id="top"
-      className="relative min-h-dvh flex items-end pb-24 md:pb-32 px-6"
-    >
+    <section id="top" className="relative min-h-dvh flex items-end pb-24 md:pb-32 px-6">
       <div className="max-w-7xl mx-auto w-full grid md:grid-cols-12 gap-8 items-end">
         <div className="md:col-span-8 md:col-start-2">
           <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[13px] md:text-sm tracked text-amber font-mono mb-8"
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease }}
+            className="tag mb-8"
           >
-            <span className="inline-block w-1.5 h-1.5 bg-amber rounded-full align-middle mr-2 drift" />
-            Transmission · {profile.location}
+            Uplink · {profile.location}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-bone leading-[0.92] tracking-tight text-[clamp(2.6rem,8vw,7.5rem)]"
+            transition={{ duration: 0.9, delay: 0.1, ease }}
+            className="font-display font-semibold uppercase text-chrome leading-[0.88] tracking-[-0.02em] text-[clamp(2.8rem,8.5vw,8rem)]"
           >
-            {profile.name.split(" ").slice(0, 2).join(" ")}
-            <span className="block text-bone-dim italic font-light">
-              {profile.name.split(" ").slice(2).join(" ")}.
+            <span className="glitch" data-text={first}>
+              {first}
+            </span>
+            <span className="block font-light italic text-chrome-dim">
+              {last}
+              <span className="text-neon not-italic blink">_</span>
             </span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 max-w-2xl text-bone-dim text-lg md:text-2xl leading-relaxed"
+            transition={{ duration: 0.9, delay: 0.25, ease }}
+            className="mt-10 max-w-[38ch] text-chrome-dim text-lg md:text-2xl leading-relaxed"
           >
-            {profile.role}. {profile.yearsExperience}+ years shipping payment
-            infrastructure, provider integrations, and the AI tooling a backend
-            team works with every day.
+            <span className="text-chrome">{profile.role}.</span>{" "}
+            {profile.yearsExperience}+ years shipping payment infrastructure,
+            provider integrations, and the AI tooling a backend team works with
+            every day.
           </motion.p>
         </div>
 
-        <motion.div
+        <motion.dl
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.6 }}
-          className="md:col-span-2 md:col-start-11 text-[13px] md:text-sm tracked text-bone-dim font-mono space-y-2"
+          transition={{ duration: 1.2, delay: 0.6 }}
+          className="md:col-span-2 md:col-start-11 text-[12px] tracked text-chrome-dim font-mono space-y-2 tabnums"
         >
-          <p>
-            <span className="text-bone">N</span> 60.21°
-          </p>
-          <p>
-            <span className="text-bone">E</span> 24.66°
-          </p>
-          <p className="pt-3 text-amber">↓ Scroll to depart</p>
-        </motion.div>
+          <div className="flex gap-2"><dt className="text-cyan">N</dt><dd>60.21°</dd></div>
+          <div className="flex gap-2"><dt className="text-cyan">E</dt><dd>24.66°</dd></div>
+          <div className="pt-3 text-neon">↓ Scroll to descend</div>
+        </motion.dl>
       </div>
     </section>
   );

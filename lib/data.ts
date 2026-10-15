@@ -19,10 +19,7 @@ export type Chapter = {
   role: string;
   city: string;
   period: string;
-  orbit: number;
   size: number;
-  hue: [number, number, number];
-  ring?: boolean;
   summary: string;
   beats: string[];
 };
@@ -35,10 +32,7 @@ export const chapters: Chapter[] = [
     role: "Backend Engineer, Funding Module Owner",
     city: "Singapore — Remote",
     period: "Jun 2024 — Present",
-    orbit: 5.6,
     size: 1.05,
-    hue: [0.07, 0.62, 0.55],
-    ring: true,
     summary:
       "Code owner of the funding module of a multi-brand iGaming platform: 270+ merged PRs, 34 payment-provider integrations across 13 markets, and the AI harness the backend team ships with.",
     beats: [
@@ -59,9 +53,7 @@ export const chapters: Chapter[] = [
     role: "Frontend Engineer",
     city: "Espoo, Finland",
     period: "Mar 2022 — Jun 2024",
-    orbit: 9.4,
     size: 0.85,
-    hue: [0.55, 0.18, 0.46],
     summary:
       "Migrated a JavaScript codebase to TypeScript and built an interactive 3D product configurator with Three.js and the HTML5 Canvas API.",
     beats: [
@@ -78,9 +70,7 @@ export const chapters: Chapter[] = [
     role: "Junior Frontend Engineer",
     city: "Espoo, Finland",
     period: "Mar 2021 — Mar 2022",
-    orbit: 13.2,
     size: 0.7,
-    hue: [0.95, 0.35, 0.6],
     summary:
       "First professional chapter — Shopify Liquid storefronts and full-stack features on Lino.fi, a second-hand baby-clothes marketplace.",
     beats: [

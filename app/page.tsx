@@ -1,5 +1,4 @@
 import { Nav } from "@/components/Nav";
-import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { UniverseClient } from "@/components/UniverseClient";
 import { BackgroundAudio } from "@/components/BackgroundAudio";
@@ -22,14 +21,14 @@ export default function Page() {
       <BackgroundAudio />
 
       <IntroGate>
+        <a href="#main" className="skip-link">Skip to content</a>
         <Nav />
-        <ScrollIndicator />
         <ObservatoryHUD />
 
-        <div className="plate-grid" aria-hidden />
+        <div className="scanlines" aria-hidden />
         <div className="vignette-overlay" aria-hidden />
 
-        <main className="relative z-10">
+        <main id="main" className="relative z-10">
           <Hero />
           <Manifesto />
           <OrbitIntro />
